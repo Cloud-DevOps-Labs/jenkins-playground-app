@@ -1,0 +1,28 @@
+{
+  "name": "web-sample",
+  "version": "1.0.0",
+  "description": "Ejemplo simple de sitio web para pipeline Jenkins",
+  "scripts": {
+    "clean": "rimraf build/",
+    "lint": "html-validate src/*.html",
+    "mkdir": "mkdirp build",
+    "copy": "copyfiles -f src/*.html build/",
+    "build": "npm run clean && npm run lint && npm run mkdir && npm run copy",
+    "test": "echo \"No tests configured\" && exit 0"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "html-validate": "^8.8.0",
+    "mkdirp": "^3.0.1",
+    "rimraf": "^5.0.5"
+  },
+  "htmlValidate": {
+    "extends": ["html-validate:recommended"],
+    "rules": {
+      "element-required-attributes": "error",
+      "no-trailing-whitespace": "error",
+      "void-style": ["error", {"style": "selfclosing"}]
+    }
+  }
+}
+
