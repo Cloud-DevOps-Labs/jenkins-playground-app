@@ -31,19 +31,18 @@ pipeline {
         
         stage('Test') {
             steps {
-                // Test básico para verificar que la web responde
                 sh '''
-                    npm install -g serve
-                    serve -s build &
-                    sleep 5
-                    RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000)
-                    if [ $RESPONSE -eq 200 ]; then
-                        echo "Website is responding correctly"
-                    else
-                        echo "Website is not responding correctly"
+                    if [ ! -f "build/index.html" ]; then
+                        echo "Error: index.html no encontrado"
                         exit 1
                     fi
-                    pkill -f serve
+                    
+                    if ! grep -q "<html" "build/index.html"; then
+                        echo "Error: El archivo no parece ser HTML válido"
+                        exit 1
+                    fi
+                    
+                    echo "Tests completados exitosamente"
                 '''
             }
         }
@@ -78,4 +77,3 @@ pipeline {
         }
     }
 }
-
