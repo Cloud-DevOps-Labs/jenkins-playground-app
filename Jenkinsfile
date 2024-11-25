@@ -63,6 +63,10 @@ pipeline {
                 // Desplegamos al servidor web via SSH
                 sshagent(['webserver-key']) {
                     sh '''
+                        sh 'ssh-add -l'  // Lista las claves cargadas
+                        sh 'env | grep SSH'  // Muestra variables SSH
+                        
+                        ssh -v -o StrictHostKeyChecking=no root@${WEBSERVER_HOST}
                         ssh -o StrictHostKeyChecking=no root@${WEBSERVER_HOST} "rm -rf ${WEBSERVER_PATH}/*"
                         scp -r www/* root@${WEBSERVER_HOST}:${WEBSERVER_PATH}/
                     '''
