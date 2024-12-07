@@ -1,10 +1,11 @@
 pipeline {
     agent {
         label 'jenkins-agent'
+        //any
     }
     
     environment {
-        WEBSERVER_HOST = 'webserver'
+        WEBSERVER_HOST = 'nginx-web'
         WEBSERVER_PATH = '/usr/share/nginx/html'
     }
 
